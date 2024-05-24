@@ -36,7 +36,7 @@
 * Make some changes to the code block in the **./policy/generated.tf**
   * **Do not change the name** as it will make the query datasource unable to find the object and cause terraform to fail.
 * run **terraform apply** and see the changed beeing applied int SmartConsol
-* Delete the object in **SmartConsole** and **publish**.
+* Use **SmartConsole**, rename the host object you created and **publish**.
 * Run **terraform taint checkpoint_management_publish.publish** to force a publish, this is needed since there has not been any change in the files in the policy folder to triggers a publish.
 * run **terraform apply** and see that the objec is recreated by terrafrom since terraform is now the source of truth for this object.
 * Delete the code block in **./policy/generated.tf** file , and run **terraform apply** and see that the host object is deleted in SmartConsole.
