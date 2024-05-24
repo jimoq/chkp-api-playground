@@ -23,7 +23,8 @@ cd 03-tf-s1c/
 
 # Review inventory.yml. 
 # As you can see we are using the enviromental varibles comming from codespaces secrets to authenticate.
-vi inventory.ini
+# The below comand will open the file in Visual Studio code 
+code inventory.ini
 
 # Deploy an enterprize policy via ansible using the following command:
 ansible-playbook cp_mgmt_playbook.yml -i inventory.yml
