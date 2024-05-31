@@ -19,7 +19,7 @@ If you get an notification that "Nothing to do. All requested collections are al
 You are now ready to deploy and maintain a enterpise policy using ansible in codespace
 ```bash
 # Enter this folder
-cd 03-tf-s1c/
+cd /workspaces/chkp-api-playground/03-ansible-s1c
 
 # Review inventory.yml. 
 # As you can see we are using the enviromental varibles comming from codespaces secrets to authenticate.

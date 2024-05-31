@@ -14,6 +14,10 @@
          id = data.checkpoint_management_show_objects.query.objects[0].uid 
      }
       ```
+* In the bash shell enter this folder
+   ```bash
+   cd /workspaces/chkp-api-playground/01-tf-s1c/
+   ```
 * run **terraform init**
 * run **terraform plan -generate-config-out=policy/generated.tf** this will generate the terraform configuration block and save the file in the **./policy** folder
 * Terrafrom import block is a exprimental feature, the import{} does not natively support to import state within modules, as a workaround, edit **main.tf**
@@ -43,5 +47,5 @@
 
 **Done**: Go to next task in 03-ansible-s1c
 ```bash
-cd 03-ansible-s1c/
+cd /workspaces/chkp-api-playground/03-ansible-s1c/
 ```

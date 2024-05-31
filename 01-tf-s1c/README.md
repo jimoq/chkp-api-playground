@@ -28,7 +28,7 @@
 You are now ready to deploy the policy using terraform in codespace
 ```bash
 # enter this folder
-cd 01-tf-s1c/
+cd /workspaces/chkp-api-playground/01-tf-s1c/
 #
 terraform init
 terraform apply
@@ -41,5 +41,5 @@ Go to the Web based Smart Console in Smart-1 Cloud and se the changes applied by
 
 **Done**: Go to next task in 02-tf-import
 ```bash
-cd 02-tf-import/
+cd /workspaces/chkp-api-playground/02-tf-import/
 ```
