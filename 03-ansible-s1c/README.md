@@ -78,7 +78,13 @@ In my example I am creating a VPN community of type meshed:
 
 Go to the Web based Smart Console in Smart-1 Cloud and see the changes applied by Ansible.
 
-Add the yaml formated task into main.yml (remember to press ctrl+s to save the changes), run the playbook again
+Add the yaml formated task into the file you created **myobjects/main.yml** (remember to press ctrl+s to save the changes).
+```bash
+# The below comand will open the file in Visual Studio code 
+code /workspaces/chkp-api-playground/03-ansible-s1c/myobjects/main.yml
+```
+
+Run the playbook again
 ```bash
 ansible-playbook cp_mgmt_playbook.yml -i inventory.yml
 ```
