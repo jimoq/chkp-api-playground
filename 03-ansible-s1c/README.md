@@ -8,6 +8,11 @@ Follow these steps to install ansible in your Codespace instance
 sudo apt install pipx -y --no-install-recommends
 pipx install --include-deps ansible
 ```
+## Update ansible collection 
+```bash
+ansible-galaxy collection install check_point.mgmt --force
+```
+
 
 ## Add latest Check Point management ansible collection
 got to https://galaxy.ansible.com/ui/repo/published/check_point/mgmt/ to find the instructions on how to install the Check Point management ansible collection
@@ -24,7 +29,7 @@ cd /workspaces/chkp-api-playground/03-ansible-s1c
 # Review inventory.yml. 
 # As you can see we are using the enviromental varibles comming from codespaces secrets to authenticate.
 # The below comand will open the file in Visual Studio code 
-code inventory.ini
+code inventory.yml
 
 # Deploy an enterprize policy via ansible using the following command:
 ansible-playbook cp_mgmt_playbook.yml -i inventory.yml
