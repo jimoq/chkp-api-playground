@@ -34,9 +34,9 @@ The configuration uses multiple provider aliases for different domains and is or
 
 ### System-Data Module (./system-data/)
 - **Administrator Creation**: Creates "Application-api-Admin" with API key authentication.
-- **Permission Profile**: Defines "internet-layer-permissions" with customized access control for policy layers.
+- **Permission Profile**: Defines "Application-layer-permissions" with customized access control for policy layers.
 - **API Key Generation**: Generates and outputs an API key for the admin.
-- **Files**: admins.tf, permission-profile.tf, example-profile.tf
+- **Files**: admins.tf, permission-profile.tf
 
 ### Policy Module (./policy/)
 - **Security Objects**: Defines hosts, networks, services, and policy rules.
