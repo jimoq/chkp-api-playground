@@ -32,7 +32,7 @@ The configuration uses multiple provider aliases for different domains and is or
 - **Publish Resources**: `checkpoint_management_publish` blocks that trigger on changes to admins or policy modules, and on destroy.
 - **Outputs**: Expose generated pod ID and API key (sensitive).
 
-### System-Data Module (./system-data/)
+### Admin Module (./system-data/)
 - **Administrator Creation**: Creates "Application-api-Admin" with API key authentication.
 - **Permission Profile**: Defines "Application-layer-permissions" with customized access control for policy layers.
 - **API Key Generation**: Generates and outputs an API key for the admin.
