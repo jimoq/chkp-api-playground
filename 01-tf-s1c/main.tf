@@ -8,7 +8,22 @@ terraform {
 }
 
 provider "checkpoint" {
-  # Configuration options
+  alias   = "system_data_domain"
+  context = "web_api"
+  domain  = "System Data"
+  timeout = "120"
+  session_file_name = "system_data_domain_sid.json"
+}
+
+provider "checkpoint" {
+  alias   = "user_domain"
+  context = "web_api"
+  domain  = "SMC User"
+  timeout = "120"
+  session_file_name = "user_domain_sid.json"
+}
+
+# Configuration options
 /*
   # Smart-1 Cloud example
   server        = "chkp-jim-xxx-nxx22x11.maas.checkpoint.com"
@@ -20,70 +35,61 @@ provider "checkpoint" {
 /*
   # On premises Management example  
   server        = "192.168.233.40"
-  #api_key      = ""
+  #api_key      = "XYZbv4ZyxdM+SdtjRI8AmjA=="
   username      = "api_user"
   password      = "vpn123"
   #domain       = "Domain Name"
   context       = "web_api"
   timeout       = "120"
-*/
+}*/
+
+# This module will update administrators on Smart-1 Cloud, a MDS or SmartCenter.
+module "admins" {
+  source = "./system-data"
+  providers = {
+    checkpoint = checkpoint.system_data_domain
+  }
 }
 
-
-
+## This module will update the security policy on Smart-1 Cloud, a MDS domain or SmartCenter
 module "policy" {
   source = "./policy"
+  providers = {
+    checkpoint = checkpoint.user_domain
+  }
 }
 
-output "pod_id_output" {
-  value = module.policy.pod_id_output
-  description = "Your random genereated pod ID"
-  depends_on = [ module.policy ]
-}
-
-// Example 1 - Trigger the publish resource every time there is a change on any of the configuration files in a specific module
+// Trigger the publish resource every time there is a change on any of the configuration files in a specific module
 // Expression to use to hash all files in directory policy that is used by the policy module
 locals {
-  publish_triggers = [for filename in fileset(path.module, "policy/*.tf"): filesha256(filename)]
+  publish_trigger-policy = [for filename in fileset(path.module, "policy/*.tf"): filesha256(filename)]
+  publish_trigger-admins = [for filename in fileset(path.module, "system-data/*.tf"): filesha256(filename)]
 }
 
 // Triggers publish if any of the hashes of the files in the policy directory changed.
-resource "checkpoint_management_publish" "publish" {
-  depends_on = [ module.policy ]
-  triggers = local.publish_triggers
+
+resource "checkpoint_management_publish" "publish_admins" {
+  depends_on = [module.admins]
+  triggers   = flatten([local.publish_trigger-admins])
+
   run_publish_on_destroy = true
+  provider = checkpoint.system_data_domain
 }
 
-//Example 2 - Trigger the publish resource if version number is changed 
-// Set the publish version number (this expression can be improved and made more intelligent)
-#locals {
-#  publish_version = [1]
-#}
+resource "checkpoint_management_publish" "publish_policy" {
+  depends_on = [module.policy]
+  triggers   = flatten([local.publish_trigger-policy])
 
-// Triggers publish if version number in publish changes
-#resource "checkpoint_management_publish" "publish" {
-#  depends_on = [ module.policy ]
-#  triggers = local.publish_version
-#}
-
-/*
-Needs to be updated with the install policy resource as it supports triggers from version 1.2 of the provider
-variable "policy_install" {
-  type    = bool
-  default = false
-  description = "Set to true to install policy"
+  run_publish_on_destroy = true
+  provider = checkpoint.user_domain
 }
 
-resource "null_resource" "installpolicy" {
-  count = var.policy_install ? 1: 0
+resource "checkpoint_management_logout" "logout_admins" {
+  depends_on = [checkpoint_management_publish.publish_admins]
+  provider   = checkpoint.system_data_domain
+}
 
-  triggers = {
-    version = "1"
+resource "checkpoint_management_logout" "logout_policy" {
+  depends_on = [checkpoint_management_publish.publish_policy]
+  provider   = checkpoint.user_domain
 }
-  provisioner  "local-exec" {
-  command = "/home/ubuntu/Terraform_Module_Test/installpolicy.sh"
-  interpreter = ["/bin/bash"]
-}
-depends_on = [checkpoint_management_publish.publish]
-}
-*/

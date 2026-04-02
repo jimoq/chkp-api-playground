@@ -54,7 +54,7 @@
                   enable_firewall_session = true
                   per_connection = true
                   per_session = true
-                  type = "None"
+                  type = "Log"
                   }
                 position = {below = checkpoint_management_access_rule.perimeterrule1.name}
                 lifecycle {

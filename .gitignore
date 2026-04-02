@@ -1,6 +1,8 @@
 #Check Point session and fingerorint files
 fingerprints.json
 sid.json
+system_data_domain_sid.json
+user_domain_sid.json
 
 # Local .terraform directories
 **/.terraform/*
